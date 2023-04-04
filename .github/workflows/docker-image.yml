@@ -15,4 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file dockerfile --tag ping-pong-CI:$(date +%s)
+      run: |
+        docker build -t shashwat0309/pingpongci:latest .
+        docker login
+        docker push shashwat0309/pingpongci:latest
+
+
+
