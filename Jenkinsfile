@@ -1,17 +1,16 @@
 pipeline {
     agent any
 
-    environment {
-        DISABLE_AUTH = 'true'
-        DB_ENGINE    = 'sqlite'
-    }
-
     stages {
         stage('Build') {
             steps {
-                echo "Database engine is ${DB_ENGINE}"
-                echo "DISABLE_AUTH is ${DISABLE_AUTH}"
-                sh 'printenv'
+                docker build -t shashwat0309/pingpongci:latest .
+                docker login -u shashwat0309 -p Shashwat@0309
+            }
+        }
+        stage('Deploy') {
+            steps {
+                docker push shashwat0309/pingpongci:latest
             }
         }
     }
