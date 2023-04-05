@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                'sh docker push shashwat0309/pingpongci:latest'
+                sh 'docker push shashwat0309/pingpongci:latest'
             }
         }
     }
