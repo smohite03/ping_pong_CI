@@ -29,6 +29,6 @@ jobs:
           context: .
           file: ./dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pingpongci:${{ steps.tag.outputs.tag }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pingpongci:${{ github.event.workflow_run.head_sha }}
 
 
