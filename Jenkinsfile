@@ -2,15 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Clone repository') {
             steps {
-                sh 'docker build -t shashwat0309/pingpongci:latest .'
-                sh 'docker login -u shashwat0309 -p Shashwat@0309'
+                git branch: 'master', url: 'https://github.com/smohite03/ping_pong_CI.git'
             }
         }
-        stage('Deploy') {
+
+        stage('Build image') {
             steps {
-                sh 'docker push shashwat0309/pingpongci:latest'
+                script {
+                    docker.build("ping-pong-api:${env.BUILD_NUMBER}")
+                }
+            }
+        }
+
+        stage('Push image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKER') {
+                        docker.image("ping-pong-api:${env.BUILD_NUMBER}").push()
+                    }
+                }
             }
         }
     }
